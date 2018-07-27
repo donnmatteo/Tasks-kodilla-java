@@ -1,7 +1,7 @@
-package com.crud.tasks.com.crud.tasks.service;
+package com.crud.tasks.service;
 
-import com.crud.tasks.com.crud.tasks.domain.Task;
-import com.crud.tasks.com.crud.tasks.repository.TaskRepository;
+import com.crud.tasks.domain.Task;
+import com.crud.tasks.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +14,9 @@ public class DbService {
 
     public List<Task> getAllTasks() {
         return repository.findAll();
+    }
+
+    public Task getTaskById(final Long id) {
+        return repository.findOne(id);
     }
 }
