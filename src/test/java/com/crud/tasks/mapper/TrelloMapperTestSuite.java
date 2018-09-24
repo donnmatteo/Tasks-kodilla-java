@@ -2,6 +2,7 @@ package com.crud.tasks.mapper;
 
 import com.crud.tasks.domain.*;
 import com.crud.tasks.trello.facade.TrelloFacade;
+import com.sun.corba.se.impl.protocol.giopmsgheaders.LocateReplyMessage_1_0;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class TrelloMapperTestSuite {
 
     @Autowired
     TrelloMapper trelloMapper;
+
+    @Autowired
+    TaskMapper taskMapper;
 
     @Test
     public void testMapToBoards() {
@@ -100,5 +104,37 @@ public class TrelloMapperTestSuite {
         TrelloCardDto testResult = trelloMapper.mapToCardDto(card1);
         //Then
         assertEquals("test card 1", testResult.getDescription());
+    }
+
+    @Test
+    public void testMapToTask() {
+        //Given
+        TaskDto task1 = new TaskDto(1L, "title 1", "content 1");
+        //when
+        Task testResult = taskMapper.mapToTask(task1);
+        //Then
+        assertEquals("title 1", testResult.getTitle());
+    }
+
+    @Test
+    public void testMapToTaskDto() {
+        //Given
+        Task task1 = new Task(1L, "title 1", "content 1");
+        //when
+        TaskDto testResult = taskMapper.mapToTaskDto(task1);
+        //Then
+        assertEquals("title 1", testResult.getTitle());
+    }
+
+    @Test
+    public void testMapToTaskDtoList() {
+        //Given
+        Task task1 = new Task(1L, "title 1", "content 1");
+        List<Task> testList = new ArrayList<>();
+        testList.add(task1);
+        //When
+        List<TaskDto> testResult = taskMapper.mapToTaskDtoList(testList);
+        //Then
+        assertEquals(1, testResult.size());
     }
 }
