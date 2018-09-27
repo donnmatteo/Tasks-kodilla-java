@@ -8,7 +8,6 @@ import com.crud.tasks.trello.facade.TrelloFacade;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,8 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -55,7 +55,7 @@ public class TrelloControllerTest {
     public void shouldFetchTrelloBoards() throws Exception {
         //Given
         List<TrelloListDto> trelloLists = new ArrayList<>();
-        trelloLists.add(new TrelloListDto("1", "Test List", false));
+        trelloLists.add(new TrelloListDto("1", "Test list", false));
 
         List<TrelloBoardDto> trelloBoards = new ArrayList<>();
         trelloBoards.add(new TrelloBoardDto("1", "Test task", trelloLists));
@@ -88,9 +88,9 @@ public class TrelloControllerTest {
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
                 "323",
                 "Test",
-                "hhtp://test.com");
+                "http://test.com");
 
-        when(trelloFacade.createCard(Mockito.any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
+        when(trelloFacade.createCard(any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(trelloCardDto);
