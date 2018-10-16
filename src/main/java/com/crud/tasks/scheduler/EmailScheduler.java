@@ -30,4 +30,18 @@ public class EmailScheduler {
                     SUBJECT,
                     "Currently in database you got: " + size + ((size > 1) ? " tasks" : " task")));
     }
+
+    @Scheduled(cron = "0 0 16 * * *")
+    public void sendInformationOfAllTasks(){
+        long size = taskRepository.count();
+        String taskSingularOrPlural = " tasks";
+        if(size == 1) {
+            taskSingularOrPlural = " task";
+        }
+        simpleEmailService.send(new Mail(
+                adminConfig.getAdminMail(),
+                SUBJECT,
+                "Quantity of your tasks: " + size + taskSingularOrPlural)
+        );
+    }
 }
